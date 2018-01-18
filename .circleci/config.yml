@@ -21,7 +21,7 @@ jobs:
             source ./.docker/functions.sh
             build
             docker-compose -f .docker/docker-compose.yaml up -d
-            inspec exec tests -t docker://docker_builder_1 --controls=composer-commands
+            inspec exec tests -t docker://docker_builder_1 --controls=terraform-commands
       - save_cache:
           key: v2-{{ arch }}-{{ checksum "Dockerfile" }}
           paths:

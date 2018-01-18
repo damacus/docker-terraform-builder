@@ -1,5 +1,5 @@
 #!/bin/sh
-export PROJECT='docker-terraform-builder'
+export PROJECT='terraform-builder'
 export DESCRIPTION='Docker container with Docker, Inspec, Ruby & Terraform'
 export MAINTAINER='damacus'
 export FILE='Dockerfile'

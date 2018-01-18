@@ -19,7 +19,7 @@ jobs:
             source ".docker/functions.sh"
             build
             test 'inspec'
-            test 'terraform'
+            test 'terraform version'
       - save_cache:
           key: v2-{{ arch }}-{{ checksum "Dockerfile" }}
           paths:

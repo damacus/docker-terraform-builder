@@ -3,7 +3,7 @@
 title 'Available Packages'
 
 control 'packages' do
-  impact 1
+  impact 0
   title 'available packages'
   desc 'Prerequisite packages should be installed by our base image'
   describe package('git') do

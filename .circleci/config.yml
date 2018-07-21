@@ -13,8 +13,14 @@ jobs:
           command: |
             source ./.docker/functions.sh
             build
-            docker-compose -f .docker/docker-compose.yaml up -d
-            inspec exec tests -t docker://docker_builder_1 --controls=terraform-commands
+            docker_test docker_builder_1
+
+            COMPOSE_VERSION=$(docker_label damacus/terraform-builder "com.docker.compose.version")
+            TERRAFORM_VERSION=$(docker_label damacus/terraform-builder "terraform.version")
+
+            echo "Compose version is: ${COMPOSE_VERSION}"
+            echo "Terraform version is: ${TERRAFORM_VERSION}"
+
       - deploy:
           name: Push Image
           command: |

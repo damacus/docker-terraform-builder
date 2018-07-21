@@ -6,17 +6,17 @@ control 'packages' do
   impact 0
   title 'available packages'
   desc 'Prerequisite packages should be installed by our base image'
-  describe package('git') do
-    its('statuses') { should cmp 'installed' }
-  end
-
-  describe package('sudo') do
-    its('statuses') { should_not cmp 'installed' }
-  end
-
-  describe package('curl') do
-    its('statuses') { should cmp 'installed' }
-  end
+  # describe package('git') do
+  #   its('statuses') { should cmp 'installed' }
+  # end
+  #
+  # describe package('sudo') do
+  #   its('statuses') { should_not cmp 'installed' }
+  # end
+  #
+  # describe package('curl') do
+  #   its('statuses') { should cmp 'installed' }
+  # end
 
   describe os.family do
     it { should eq 'linux' }

@@ -13,8 +13,7 @@ jobs:
           command: |
             source ./.docker/functions.sh
             build
-            docker-compose -f .docker/docker-compose.yaml up -d
-            inspec exec tests -t docker://docker_builder_1 --controls=terraform-commands
+            docker_test docker_builder_1
       - deploy:
           name: Push Image
           command: |

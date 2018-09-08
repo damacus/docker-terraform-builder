@@ -32,8 +32,10 @@ jobs:
       - deploy:
           name: Push Image
           command: |
-            docker-compose push builder:latest
-            docker-compose push builder:${CIRCLE_BUILD_NUM}
+            docker login -u "${DOCKER_LOGIN:?}" -p "${DOCKER_PASSWORD:?}"
+            docker-compose push builder
+            docker tag damacus/docker-builder:latest damacus/docker-builder:${CIRCLE_BUILD_NUM}
+            docker push damacus/docker-builder:${CIRCLE_BUILD_NUM}
 
 workflows:
   version: 2

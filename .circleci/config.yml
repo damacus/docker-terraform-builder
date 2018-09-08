@@ -34,8 +34,8 @@ jobs:
           command: |
             docker login -u "${DOCKER_LOGIN:?}" -p "${DOCKER_PASSWORD:?}"
             docker-compose push builder
-            docker tag damacus/docker-builder:latest damacus/docker-builder:${CIRCLE_BUILD_NUM}
-            docker push damacus/docker-builder:${CIRCLE_BUILD_NUM}
+            docker tag damacus/terraform-builder:latest damacus/terraform-builder:${CIRCLE_BUILD_NUM}
+            docker push damacus/terraform-builder:${CIRCLE_BUILD_NUM}
 
 workflows:
   version: 2

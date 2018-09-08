@@ -1,38 +1,55 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: damacus/docker-builder:latest
-    working_directory: ~/project
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 17.09.0-ce
-      - run:
-          name: Build & Test Image
-          command: |
-            source ./.docker/functions.sh
-            build
-            docker_test docker_builder_1
-      - deploy:
-          name: Push Image
-          command: |
-            source ".docker/functions.sh"
-            push
+  test:
+  - checkout
+  - setup_remote_docker:
+      version: 17.09.0-ce
+  - run:
+      name: Build & Test Image
+      command: |
+        docker-compose up -d --build
+        inspec exec tests -t "docker://terraform-builder"
+        docker-compose down
+
+  build_and_deploy:
+  - checkout
+  - setup_remote_docker:
+      version: 17.09.0-ce
+  - run:
+      name: Build & Test Image
+      command: |
+        docker-compose up -d --build
+        inspec exec tests -t "docker://terraform-builder"
+        docker-compose down
+  - deploy:
+      name: Push Image
+      command: |
+        docker-compose push builder:latest
+        docker-compose push builder:${CIRCLE_BUILD_NUM}
 
 workflows:
   version: 2
   build:
     jobs:
-      - build:
+      - test:
           context: org-global
+          filters:
+            branches:
+              ignore:
+                - master
+      - build_and_deploy:
+          context: org-global
+          filters:
+            branches:
+              only:
+                - master
   nightly:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 0"
           filters:
             branches:
               only:
                 - master
     jobs:
-      - build
+      - build_and_deploy

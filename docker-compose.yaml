@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  builder:
+    build:
+      context: .
+      args:
+        - CIRCLE_SHA1
+        - DATE
+        - PROJECT
+    image: damacus/terraform-builder
+    container_name: terraform-builder
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true

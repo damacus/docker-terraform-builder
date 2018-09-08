@@ -9,16 +9,14 @@ RUN curl https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform
     unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /bin &&\
     rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
-ARG PROJECT=unknown
-ARG DATE=unknown
-ARG DESCRIPTION=unknown
-ARG URL=unknown
-ARG COMMIT=unknown
+ARG PROJECT="terraform-builder"
+ARG DESCRIPTION="Docker container with Docker, Inspec, Ruby & Terraform"
+ARG URL="https://github.com/damacus/docker-builder"
+ARG CIRCLE_SHA1=unknown
 
 LABEL "io.damacus.title"=$PROJECT                \
-      "io.damacus.created"=$DATE                 \
       "io.damacus.description"=$DESCRIPTION      \
       "io.damacus.url"=$URL                      \
-      "io.damacus.revision"=$COMMIT              \
+      "io.damacus.revision"=$CIRCLE_SHA1         \
       "terraform.version"=$TERRAFORM_VERSION     \
       "terraform.sha256sum"=$TERRAFORM_SHA256SUM

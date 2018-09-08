@@ -1,31 +1,39 @@
 version: 2
 jobs:
   test:
-  - checkout
-  - setup_remote_docker:
-      version: 17.09.0-ce
-  - run:
-      name: Build & Test Image
-      command: |
-        docker-compose up -d --build
-        inspec exec tests -t "docker://terraform-builder"
-        docker-compose down
+    docker:
+      - image: damacus/docker-builder:latest
+    working_directory: ~/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 17.09.0-ce
+      - run:
+          name: Build & Test Image
+          command: |
+            docker-compose up -d --build
+            inspec exec tests -t "docker://terraform-builder"
+            docker-compose down
 
   build_and_deploy:
-  - checkout
-  - setup_remote_docker:
-      version: 17.09.0-ce
-  - run:
-      name: Build & Test Image
-      command: |
-        docker-compose up -d --build
-        inspec exec tests -t "docker://terraform-builder"
-        docker-compose down
-  - deploy:
-      name: Push Image
-      command: |
-        docker-compose push builder:latest
-        docker-compose push builder:${CIRCLE_BUILD_NUM}
+    docker:
+      - image: damacus/docker-builder:latest
+    working_directory: ~/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 17.09.0-ce
+      - run:
+          name: Build & Test Image
+          command: |
+            docker-compose up -d --build
+            inspec exec tests -t "docker://terraform-builder"
+            docker-compose down
+      - deploy:
+          name: Push Image
+          command: |
+            docker-compose push builder:latest
+            docker-compose push builder:${CIRCLE_BUILD_NUM}
 
 workflows:
   version: 2

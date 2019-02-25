@@ -11,7 +11,7 @@ RUN curl https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform
 
 ARG PROJECT="terraform-builder"
 ARG DESCRIPTION="Docker container with Docker, Inspec, Ruby & Terraform"
-ARG URL="https://github.com/damacus/docker-builder"
+ARG URL="https://github.com/damacus/docker-terraform-builder"
 ARG CIRCLE_SHA1=unknown
 
 LABEL "io.damacus.title"=$PROJECT \

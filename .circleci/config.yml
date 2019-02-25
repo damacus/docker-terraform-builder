@@ -1,4 +1,5 @@
-version: 2
+---
+version: 2.1
 jobs:
   test:
     docker:
@@ -6,8 +7,7 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 17.09.0-ce
+      - setup_remote_docker
       - run:
           name: Build & Test Image
           command: |
@@ -21,8 +21,7 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 17.09.0-ce
+      - setup_remote_docker
       - run:
           name: Build & Test Image
           command: |
@@ -45,22 +44,19 @@ workflows:
           context: org-global
           filters:
             branches:
-              ignore:
-                - master
+              ignore: [master]
       - build_and_deploy:
-          context: org-global
+          # context: org-global
           filters:
             branches:
-              only:
-                - master
+              only: [master]
   nightly:
     triggers:
       - schedule:
           cron: "0 0 * * 0"
-          context: org-global
+          # context: org-global
           filters:
             branches:
-              only:
-                - master
+              only: [master]
     jobs:
       - build_and_deploy
